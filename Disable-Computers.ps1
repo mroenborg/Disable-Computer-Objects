@@ -112,7 +112,7 @@ Write-Log -LogOutput ("*********************************************** SCRIPT ST
 Write-Log -LogOutput ("Fetching information from objects in AD and moving computer objects to '$($MoveToOU)' for computer objects that have lastLogon '$($Days)' days ago..") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
 
 #Get the date between now and the $Days.
-$LastLogonDate = (Get-Date).AddDays($Days)
+$DateThreshold = (Get-Date).AddDays($Days)
 try{
 
     #Ensure that the variable is defined as an array
@@ -122,10 +122,10 @@ try{
     foreach($OU in $SearchOUs){
 
         #Add all computer objects that is enabled, and last logon is XXX days.
-        $Computers += Get-ADComputer -Property Name,lastLogonDate -Filter {lastLogonDate -lt $LastLogonDate -AND Enabled -eq $true} -SearchBase $OU
+        $Computers += Get-ADComputer -Property Name,lastLogonDate -Filter {lastLogonDate -lt $DateThreshold -AND Enabled -eq $true} -SearchBase $OU
 
         #Add all computers that have been created but have never logged on, and is created more than xx days ago
-        $Computers += Get-ADComputer -Property Name,lastLogonDate,whenCreated -Filter  {lastlogondate -notlike "*" -AND whenCreated -lt $LastLogonDate -AND Enabled -eq $true} -SearchBase $OU
+        $Computers += Get-ADComputer -Property Name,lastLogonDate,whenCreated -Filter  {lastlogondate -notlike "*" -AND whenCreated -lt $DateThreshold -AND Enabled -eq $true} -SearchBase $OU
     }
 
     #Disable the computer objects.
