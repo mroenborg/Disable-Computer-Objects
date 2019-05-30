@@ -1,4 +1,4 @@
-﻿<#
+<#
 
     .SYNOPSIS
 
@@ -23,7 +23,7 @@
 $LogLocation = "$PSScriptRoot\Logs"
 $LogName = "Disable-Computers"
 
-#The domain
+#The domain info
 $DomainName = Get-ADDomain
 
 #OU's to search
