@@ -49,8 +49,8 @@ Function Write-Log
         [Parameter(Mandatory=$true, HelpMessage="Provide a message")][string]$LogOutput,
         [Parameter(Mandatory=$true, HelpMessage="Provide the function name")][string]$FunctionName,
         [Parameter(Mandatory=$false, HelpMessage="Provide the scriptlinenumber")][string]$ScriptLine,
-        [Parameter(Mandatory=$false, HelpMessage="Provide path, default is .\Logs")][string]$Path,
-        [Parameter(Mandatory=$false, HelpMessage="Provide name for the logs")][string]$Name,
+        [Parameter(Mandatory=$false, HelpMessage="Provide path, default is .\Logs")][string]$Path = "$PSScriptRoot\Logs",
+        [Parameter(Mandatory=$false, HelpMessage="Provide name for the log")][string]$Name,
         [Parameter(Mandatory=$false, HelpMessage="Provide level, 1 = default, 2 = warning 3 = error")][ValidateSet(1, 2, 3)][int]$LogLevel = 1
     )
 
