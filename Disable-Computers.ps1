@@ -109,7 +109,7 @@ Function Write-Log
 
 #Start write log
 Write-Log -LogOutput ("*********************************************** SCRIPT START ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
-Write-Log -LogOutput ("Fetching information from objects in AD and moving objects to '$($MoveToOU)' for computer objects that have lastLogon '$($Days)' days ago..") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
+Write-Log -LogOutput ("Fetching information from objects in AD and moving computer objects to '$($MoveToOU)' for computer objects that have lastLogon '$($Days)' days ago..") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
 
 #Get the date between now and the $Days.
 $LastLogonDate = (Get-Date).AddDays($Days)
