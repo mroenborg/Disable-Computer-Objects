@@ -113,6 +113,8 @@ Write-Log -LogOutput ("Fetching information from objects in AD and moving comput
 
 #Get the date between now and the $Days.
 $DateThreshold = (Get-Date).AddDays($Days)
+
+#Catch, log and stop if anything goes wrong
 try{
 
     #Ensure that the variable is defined as an array
@@ -136,6 +138,10 @@ try{
     $Computers | Move-ADObject -Server $DomainName -TargetPath $MoveToOU
 }
 catch {
+    
+    #Write error to log
     Write-Log -LogOutput ("$_") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName -LogLevel 3 | Out-Null
 }
+
+#End script
 Write-Log -LogOutput ("*********************************************** SCRIPT END ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
