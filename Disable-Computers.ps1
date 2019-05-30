@@ -10,8 +10,8 @@
 
     .NOTES
     Author: Morten Rønborg
-    Date: 16-04-2018
-    Last Updated: 16-04-2018
+    Date: 14-05-2019
+    Last Updated: 30-05-2019
 
 #>
 #Requires –Modules ActiveDirectory
@@ -128,7 +128,7 @@ try{
         $Computers += Get-ADComputer -Property Name,lastLogonDate,whenCreated -Filter  {lastlogondate -notlike "*" -AND whenCreated -lt $LastLogonDate -AND Enabled -eq $true} -SearchBase $OU
     }
 
-    #Disable the computer object.
+    #Disable the computer objects.
     Write-Log -LogOutput  ("Number og computers to disable is '$($Computers.Count)'. Computers:`n$($Computers.Name -join "`n")") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
     $Computers | Set-ADComputer -Server $DomainName -Enabled $false -Description ("Disabled (Script) - " + (Get-Date -UFormat "%d-%m-%Y %H:%M:%S")) 
 
@@ -138,4 +138,4 @@ try{
 catch {
     Write-Log -LogOutput ("$_") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName -LogLevel 3 | Out-Null
 }
-Write-Log -LogOutput ("*********************************************** SCRIPT END ***********************************************") -FunctionName $($MyInvocation.MyCommand)-Path $LogLocation -Name $LogName | Out-Null
+Write-Log -LogOutput ("*********************************************** SCRIPT END ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
