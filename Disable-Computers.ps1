@@ -106,6 +106,9 @@ Function Write-Log
 ##*=============================================
 ##* END FUNCTION LISTINGS
 ##*=============================================
+##*=============================================
+##* MAIN START
+##*=============================================
 
 #Start write log
 Write-Log -LogOutput ("*********************************************** SCRIPT START ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
@@ -145,3 +148,6 @@ catch {
 
 #End script
 Write-Log -LogOutput ("*********************************************** SCRIPT END ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
+##*=============================================
+##* END MAIN
+##*=============================================
