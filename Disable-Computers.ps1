@@ -17,6 +17,28 @@
 #Requires –Modules ActiveDirectory
 ################################################
 ##*=============================================
+##* VARIABLES LISTINGS
+##*=============================================
+#Log variables
+$LogLocation = "$PSScriptRoot\Logs"
+$LogName = "Disable-Computers"
+
+#The domain
+$DomainName = Get-ADDomain
+
+#OU's to search
+$SearchOUs = @("OU=AD Computers,DC=mroenborg,DC=dk","CN=Computers,DC=mroenborg,DC=dk")
+
+#OU to move disabled computers to
+$MoveToOU =  "OU=Disabled Computers,DC=mroenborg,DC=dk"
+
+#Number of days from today since the last logon. This will impact on when to disable and move the object.
+$Days = -120
+
+##*=============================================
+##* END VARIABLES LISTINGS
+##*=============================================
+##*=============================================
 ##* FUNCTION LISTINGS
 ##*=============================================
 #region Function Write-Log
@@ -84,24 +106,10 @@ Function Write-Log
 ##*=============================================
 ##* END FUNCTION LISTINGS
 ##*=============================================
-##*=============================================
-##* VARIABLES LISTINGS
-##*=============================================
-$LogLocation = "$PSScriptRoot\Logs"
-$LogName = "Disable-Workstations"
 
-$DomainName = "mroenborg.dk"
-$SearchOUs = @("OU=AD Computers,DC=mroenborg,DC=dk","CN=Computers,DC=mroenborg,DC=dk")
-$MoveToOU =  "OU=Disabled Computers,DC=mroenborg,DC=dk"
-
-#Number of days from today since the last logon. This will impact on when to disable and move the object.
-$Days = -120
-
-##*=============================================
-##* END VARIABLES LISTINGS
-##*=============================================
-Write-Log -LogOutput ("*********************************************** SCRIPT START ***********************************************") -FunctionName $($MyInvocation.MyCommand)-Path $LogLocation -Name $LogName | Out-Null
-Write-Log -LogOutput ("Fetching information from objects in AD and moving objects to '$($MoveToOU)' for workstation objects that have lastLogon '$($Days)' days ago..") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
+#Start write log
+Write-Log -LogOutput ("*********************************************** SCRIPT START ***********************************************") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
+Write-Log -LogOutput ("Fetching information from objects in AD and moving objects to '$($MoveToOU)' for computer objects that have lastLogon '$($Days)' days ago..") -FunctionName $($MyInvocation.MyCommand) -Path $LogLocation -Name $LogName | Out-Null
 
 #Get the date between now and the $Days.
 $LastLogonDate = (Get-Date).AddDays($Days)
