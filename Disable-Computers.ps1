@@ -9,7 +9,7 @@
     .EXAMPLE
 
     .NOTES
-    Author: Morten Rønborg
+    Author: Morten Rønborg 
     Date: 14-05-2019
     Last Updated: 30-05-2019
 
